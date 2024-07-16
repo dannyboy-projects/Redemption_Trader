@@ -1,10 +1,11 @@
 import pandas as pd
 import random
 import string
+from datetime import datetime, timedelta
 
 
 class SimOrderMgmtSystem:
-    account_balance = 10
+    account_balance = 100
     open_positions  = {}
     limit_orders    = {}
     trade_log       = pd.DataFrame(columns = ['strat_id','instrument', 'open_time', 'open_price','close_time', 'close_price','dir','size','PnL'])
@@ -51,7 +52,31 @@ class SimOrderMgmtSystem:
         print(self.open_positions)
         return deal_ref
 
-        
+    def close_deal(self,trade_ID):
+        # check to see if SL or TP hit first
+        self.update_positions()
+
+
+        closed_pos =  []
+        if trade_ID in self.open_positions[self.strat_ID]:
+
+            self.open_positions[self.strat_ID][trade_ID]['status'] = "CLOSED"
+
+            if int(self.open_positions[self.strat_ID][trade_ID]['dir']) == 1:
+                open_px = self.current_candle['open_bid']  
+                self.open_positions[self.strat_ID][trade_ID]['close_PX'] = open_px # of next candle when exit 
+                self.open_positions[self.strat_ID][trade_ID]['close_time'] = self.current_candle.name
+                closed_pos.append(trade_ID)
+            elif int(self.open_positions[self.strat_ID][trade_ID]['dir']) == -1:
+                open_px = self.current_candle['open_ask']
+                self.open_positions[self.strat_ID][trade_ID]['close_PX'] = open_px
+                self.open_positions[self.strat_ID][trade_ID]['close_time'] = self.current_candle.name
+                closed_pos.append(trade_ID)
+
+            self._closed_pos2tradeLog(self.strat_ID,trade_ID,self.open_positions[self.strat_ID][trade_ID] )
+            self.open_positions[self.strat_ID].pop(trade_ID)
+
+            
         
 
 
@@ -59,8 +84,7 @@ class SimOrderMgmtSystem:
     def limit_order(self,dir,entry,stop_loss,target_px,quantity,cancel_time,epic):
         pass
 
-    def close_deal(self,trade_ID):
-        pass
+    
 
     def close_limit_order(self,trade_ID):
         pass
@@ -91,13 +115,27 @@ class SimOrderMgmtSystem:
     def _closed_pos2tradeLog(self, strat_id, trade_id, closed_pos):
         # ['strat_id','instrument', 'open_time', 'open_price','close_time', 'close_price','dir','size','PnL'])
         # instrument = 
+
+        # adjust for trading on candle close
+        open_time = pd.to_datetime(closed_pos['open_time'])
+        DelTime = timedelta(minutes=5)
+        tz_off = (open_time - DelTime).strftime("%z")
+        open_time= (open_time - DelTime).strftime("%Y-%m-%d %H:%M:%S")
+
+        # tz_off = open_time.strftime('%z')
+        tz_off_format = tz_off[:3] + ':' + tz_off[3:]
+        open_time = open_time + tz_off_format
+
+        close_time = closed_pos['close_time']
+        # close_time = pd.to_datetime(close_time + DelTime)
+
         print(closed_pos)
         PnL = closed_pos['dir']*closed_pos['size']*(closed_pos['close_PX'] - closed_pos['open_PX'])
         self.trade_log.loc[trade_id] = [strat_id,\
                                         closed_pos['instrument'],\
-                                        closed_pos['open_time'],\
+                                        open_time,\
                                         closed_pos['open_PX'],\
-                                        closed_pos['close_time'],\
+                                        close_time,\
                                         closed_pos['close_PX'],\
                                         closed_pos['dir'],\
                                         closed_pos['size'],\
