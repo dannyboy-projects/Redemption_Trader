@@ -7,29 +7,32 @@ import pandas as pd
 
 GlobalStreamObj = sim_env.StreamData_Sim()
 
-
-
 def sim_init(self,id):
     print('custom_init')
     pipband.Pipband.__init__(self,id)
     sim_env.SimDataSubscription.__init__(self)
     sim_env.SimOrderMgmtSystem.__init__(self)
-    
 
+def sim_DataLabeller_init(self,id):
+    print('custom_init')
+    pipband.Pipband_DataLabeller.__init__(self,id)
+    sim_env.SimDataSubscription.__init__(self)
+    sim_env.SimOrderMgmtSystem.__init__(self)
 
 # strat = type('SimStrat', (sim_env.SimOrderMgmtSystem,sim_env.SimDataSubscription,test.Strat),{'__init__':sim_init})
 strat = type('pipband', (sim_env.SimOrderMgmtSystem,sim_env.SimDataSubscription,pipband.Pipband),{'__init__':sim_init})
-
+data_labeller = type('pipband_DataLabeller', (sim_env.SimOrderMgmtSystem,sim_env.SimDataSubscription,pipband.Pipband_DataLabeller),{'__init__':sim_DataLabeller_init})
 s = strat(1)
-# t = strat(2)
-
-s.add_listener(s.listen_and_operate)
-
-GlobalStreamObj.Subscribe(s)
-
-s.instrument = 'C:USDJPY'
+t = data_labeller(2)
 
 
+# s.add_listener(s.listen_and_operate)
+t.add_listener(t.listen_and_operate)
+
+
+GlobalStreamObj.Subscribe(t)
+
+t.instrument = 'C:USDJPY'
 
 
 
@@ -43,7 +46,7 @@ usdjpy_visualiser = usdjpy.copy()
 usdjpy = sim_env.midMarket2BidAsk(usdjpy,0.0001)
 GlobalStreamObj.load_data_subscription('C:USDJPY',usdjpy)
 
-for i in range(40000):
+for i in range(len(usdjpy)):
     GlobalStreamObj.time_step(usdjpy.index.values[i])
 
 
@@ -54,8 +57,8 @@ s.trade_log.to_csv('tradelog.csv')
 print(s.account_balance)
 
 
-for t in s.trade_log.index:
-    sim_env.create_interactive_visualiser(usdjpy_visualiser, start_datetime=s.trade_log.loc[t]['open_time'], end_datetime=s.trade_log.loc[t]['close_time'])
+# for t in s.trade_log.index:
+#     sim_env.create_interactive_visualiser(usdjpy_visualiser, start_datetime=s.trade_log.loc[t]['open_time'], end_datetime=s.trade_log.loc[t]['close_time'])
 
 
 

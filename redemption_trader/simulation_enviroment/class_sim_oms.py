@@ -56,8 +56,8 @@ class SimOrderMgmtSystem:
         # check to see if SL or TP hit first
         self.update_positions()
 
-
         closed_pos =  []
+        
         if trade_ID in self.open_positions[self.strat_ID]:
 
             self.open_positions[self.strat_ID][trade_ID]['status'] = "CLOSED"
@@ -77,9 +77,6 @@ class SimOrderMgmtSystem:
             self.open_positions[self.strat_ID].pop(trade_ID)
 
             
-        
-
-
 
     def limit_order(self,dir,entry,stop_loss,target_px,quantity,cancel_time,epic):
         pass
@@ -113,8 +110,6 @@ class SimOrderMgmtSystem:
 
         
     def _closed_pos2tradeLog(self, strat_id, trade_id, closed_pos):
-        # ['strat_id','instrument', 'open_time', 'open_price','close_time', 'close_price','dir','size','PnL'])
-        # instrument = 
 
         # adjust for trading on candle close
         open_time = pd.to_datetime(closed_pos['open_time'])
@@ -148,11 +143,6 @@ class SimOrderMgmtSystem:
         print(self.account_balance)
         return 0
        
-        
-        
-
-
-
     def _filled_Limit2open_pos(self,filled_Limit):
         pass
 
@@ -161,6 +151,7 @@ class SimOrderMgmtSystem:
         closed_pos = []
         if self.strat_ID in self.open_positions:
             for tradeID in self.open_positions[self.strat_ID]:
+                
                 # print('update_positions',float(self.open_positions[self.strat_ID][tradeID]['target']), self.current_candle['high_bid'])
                 #     print(trade)
                 # entry = self.open_positions[strat][tradeID]
@@ -188,8 +179,9 @@ class SimOrderMgmtSystem:
                         closed_pos.append(tradeID)
 
             if closed_pos != []:
-                self._closed_pos2tradeLog(self.strat_ID,tradeID,self.open_positions[self.strat_ID][tradeID] )
-                self.open_positions[self.strat_ID].pop(tradeID)
+                for c in closed_pos:
+                    self._closed_pos2tradeLog(self.strat_ID,c,self.open_positions[self.strat_ID][c] )
+                    self.open_positions[self.strat_ID].pop(c)
 
     def _create_dealref(self):
         rand_ref = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))

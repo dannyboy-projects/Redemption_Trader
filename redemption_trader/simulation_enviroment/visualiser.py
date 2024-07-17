@@ -28,9 +28,7 @@ def create_basic_visualiser(df,start_datetime = None, end_datetime = None):
         df.index = pd.to_datetime(df.index)
 
     df = df[(df.index >= pd.to_datetime(start_datetime))& (df.index < pd.to_datetime(end_datetime))]
-    # print(pd.to_datetime(end_datetime))
-    # print(df.index < pd.to_datetime(end_datetime))
-    # df = df[(df.index < pd.to_datetime(end_datetime)) ]
+
     mpf.plot(df, type='candle', style = 'charles')
     plt.show()
 
