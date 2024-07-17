@@ -37,7 +37,7 @@ class Pipband:
             dir = entry_signal(self.open_px,self.close_px,band)
             open_markets = get_open_markets(self.timestamp)
 
-            if (new_candle(self.timestamp,data.name) and dir) and (open_markets['London'] or open_markets['NYC']):# dir is non-zero = True
+            if (new_candle(self.timestamp,data.name) and dir) and (valid_hours(self.timestamp)):# dir is non-zero = True
     
                 T_px, SL_px = gen_targets(dir,self.close_px,band)
                 risk_GBP = self.parameters['account_risk_per_trade']*self.account_balance

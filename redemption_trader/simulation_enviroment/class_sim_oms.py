@@ -8,7 +8,7 @@ class SimOrderMgmtSystem:
     account_balance = 100
     open_positions  = {}
     limit_orders    = {}
-    trade_log       = pd.DataFrame(columns = ['strat_id','instrument', 'open_time', 'open_price','close_time', 'close_price','dir','size','PnL'])
+    trade_log       = pd.DataFrame(columns = ['strat_id','instrument', 'open_time', 'open_price','close_time', 'close_price','dir','size','PnL','account_balance(t)'])
     time       = ''
     current_candle = ''
 
@@ -116,16 +116,19 @@ class SimOrderMgmtSystem:
         DelTime = timedelta(minutes=5)
         tz_off = (open_time - DelTime).strftime("%z")
         open_time= (open_time - DelTime).strftime("%Y-%m-%d %H:%M:%S")
-
-        # tz_off = open_time.strftime('%z')
         tz_off_format = tz_off[:3] + ':' + tz_off[3:]
         open_time = open_time + tz_off_format
 
         close_time = closed_pos['close_time']
-        # close_time = pd.to_datetime(close_time + DelTime)
 
         print(closed_pos)
+
+         # update strat object local parametes
+
         PnL = closed_pos['dir']*closed_pos['size']*(closed_pos['close_PX'] - closed_pos['open_PX'])
+        self.parameters['session_PnL'] += PnL
+        self.account_balance += PnL
+
         self.trade_log.loc[trade_id] = [strat_id,\
                                         closed_pos['instrument'],\
                                         open_time,\
@@ -134,11 +137,9 @@ class SimOrderMgmtSystem:
                                         closed_pos['close_PX'],\
                                         closed_pos['dir'],\
                                         closed_pos['size'],\
-                                        PnL]
-        # update strat object local parametes
-        self.parameters['session_PnL'] += PnL
-        self.account_balance += PnL
-        # print(self.parameters['session_PnL'])
+                                        PnL,\
+                                        self.account_balance]
+       
         print(self.trade_log)
         print(self.account_balance)
         return 0

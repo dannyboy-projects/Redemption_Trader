@@ -46,7 +46,7 @@ usdjpy_visualiser = usdjpy.copy()
 usdjpy = sim_env.midMarket2BidAsk(usdjpy,0.0001)
 GlobalStreamObj.load_data_subscription('C:USDJPY',usdjpy)
 
-for i in range(len(usdjpy)):
+for i in range(10000):
     GlobalStreamObj.time_step(usdjpy.index.values[i])
 
 
@@ -54,6 +54,9 @@ for i in range(len(usdjpy)):
 sim_env.TradeLog_visualiser(s.trade_log)
 
 s.trade_log.to_csv('tradelog.csv')
+t.aux_data.to_csv('aux_data.csv')
+
+
 print(s.account_balance)
 
 
