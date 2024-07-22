@@ -12,8 +12,8 @@ Brief overvew of the main components built here to develop aglorithmic trading s
 - live trading enviroment :red_circle:
 
 **ML models Explored**
-- Decision Tree (clf) :orange_diamond:
-- Random Forest (clf) :orange_diamond:
+- Decision Tree (clf) :small_orange_diamond:
+- Random Forest (clf) :small_orange_diamond:
 
 The overall apporach here was to build strategy objects that behaved in the same manner whether they were being tested in simulation (backtest) capacity or in a live trading enviroment. To that end, a dynamically assing class was created, inheriting an order managemnt system, a data subscription object, and the individaul strategy (`Pipband`)inteself woth a custom `__init__` function.
 
@@ -23,7 +23,14 @@ Once the stragey is fully developped, the strat object can be instantiated using
 
 This allows seamless migration from development (simulation) to live trading - assuming the parent classes have been built correctly and with mirrored method names and attributes. 
 
+### Pipband Strategy
+**Basic Premise**
 
+Essentially, around market opens it is believed that prices move more predctably around whole numbers e.g. 128.0000. This 'law of round numbers' or perhaps 'lore of round numbers' could be attributed to traders being more likely to fill orders around price levels that are easoer to type in, or perform mental aritmetic with. Coupled with daily increased volume at market opens around the world the pipband strategy aims to exploit these daily patterns - if they exist. 
+
+**First Steps**
+
+Pullling 
 
 
 
