@@ -108,10 +108,10 @@ if __name__== '__main__':
     poly_params = {'source':'polygon','resolution':'minute','multiplier':5}
 
     pause = 12 #seconds since 5 api calls per min
-    Monday = "2022-05-02"
+    Monday = "2024-04-29"
     date_fmt = "%Y-%m-%d"
     Sunday_open = Monday_2_fxSunday_open(Monday)
-    end = get_Friday('2024-04-26')
+    end = get_Friday('2024-07-19')
     instrument = ["C:USDJPY"]
     
     delta = (datetime.datetime.strptime(end,date_fmt)  - datetime.datetime.strptime(Monday,date_fmt)).total_seconds()/60

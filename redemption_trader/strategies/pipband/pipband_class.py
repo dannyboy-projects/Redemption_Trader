@@ -10,6 +10,7 @@ class Pipband:
         self.open_px    = 0
         self.close_px   = 0
         self.dealref    = ''
+        self.DT_model = load_DT_model('./redemption_trader/strategies/pipband/DT.joblib')
         print('strat init, strat_ID: ', self.strat_ID)
 
     def set_parameters(self,risk_per_trade,min_R):
@@ -44,10 +45,13 @@ class Pipband:
                 
                 size = position_size(dir, self.close_px, SL_px,risk_GBP)
 
-                if dir ==1:
+                # flag_DT_model = self.DT_model.predict(format_model_input(data,dir))
+                # if self.DT_model.predict([]) #need to format input [opentime_fmt, ect...]
+                flag_DT_model = 1
+                if dir ==1 and flag_DT_model:
                     self.dealref = self.deal("BUY",SL_px, T_px, size,self.instrument)
                     self.status = 'open_position'
-                elif dir == -1:
+                elif dir == -1 and flag_DT_model:
                     self.dealref = self.deal("SELL",SL_px, T_px, size,self.instrument)
                     self.status = 'open_position'
                 

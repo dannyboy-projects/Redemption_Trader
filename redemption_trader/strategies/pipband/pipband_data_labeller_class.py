@@ -11,7 +11,9 @@ class Pipband_DataLabeller:
         self.open_px    = 0
         self.close_px   = 0
         self.dealref    = ''
-        self.aux_data = pd.DataFrame(columns = ['candle_size'])
+        self.aux_data = pd.DataFrame(columns = ['candle_size', 'percent_candle_size','parkinson_volatility'\
+                                                ,'shortterm_momentum','momentum','longterm_momentum','extralongterm_momentum'\
+                                                    ,'percent2MA_shortterm','percent2MA_longterm'])
         print('strat init, strat_ID: ', self.strat_ID)
 
     def set_parameters(self,risk_per_trade,min_R):
@@ -45,7 +47,15 @@ class Pipband_DataLabeller:
                 elif dir == -1:
                     self.dealref = self.deal("SELL",SL_px, T_px, 1,self.instrument)
                     # self.status = 'open_position'
-                self.aux_data.loc[self.dealref] = [midmarket(data['close_bid'],data['close_ask']) - midmarket(data['open_bid'],data['open_ask']) ]
+
+                # generate aux data for ML model
+                candle_size = midmarket(data['close_bid'],data['close_ask']) - midmarket(data['open_bid'],data['open_ask'])
+                self.aux_data.loc[self.dealref] = [candle_size,\
+                                                   candle_size/midmarket(data['open_bid'],data['open_ask']),\
+                                                   data['parkinson_volatility'],
+                                                    data['shortterm_momentum'],data['momentum'],\
+                                                    data['longterm_momentum'], data['extralongterm_momentum'],\
+                                                    data['percent2MA_shortterm'], data['percent2MA_longterm'] ]
                 
             
             self.timestamp = data.name

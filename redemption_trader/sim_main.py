@@ -26,27 +26,29 @@ s = strat(1)
 t = data_labeller(2)
 
 
-# s.add_listener(s.listen_and_operate)
-t.add_listener(t.listen_and_operate)
+s.add_listener(s.listen_and_operate)
+# t.add_listener(t.listen_and_operate)
+
+GlobalStreamObj.Subscribe(s)
+s.instrument = 'C:USDJPY'
 
 
-GlobalStreamObj.Subscribe(t)
-
-t.instrument = 'C:USDJPY'
-
-
-
-usdjpy = pd.read_csv('./redemption_trader/sim_data_mgmt/polygon_client/C:USDJPY_clean.csv',index_col = 0)
+usdjpy = pd.read_csv('./redemption_trader/processed_data/C:USDJPY_clean_OS.csv',index_col = 0)
 print(usdjpy.head())
 usdjpy_visualiser = usdjpy.copy()
 
 # sim_env.create_interactive_visualiser(usdjpy.head())
 # sim_env.create_basic_visualiser(usdjpy, start_datetime='2022-05-29 21:00:00+00:00', end_datetime='2022-05-30 21:00:00+00:00')
+usdjpy = sim_env.add_parkinson_volatility(usdjpy,576)
+usdjpy = sim_env.add_momentums(usdjpy)
+print(usdjpy)
 
-usdjpy = sim_env.midMarket2BidAsk(usdjpy,0.0001)
+
+usdjpy = sim_env.midMarket2BidAsk(usdjpy,0.00005)
+print(usdjpy)
 GlobalStreamObj.load_data_subscription('C:USDJPY',usdjpy)
 
-for i in range(10000):
+for i in range(len(usdjpy)):
     GlobalStreamObj.time_step(usdjpy.index.values[i])
 
 
@@ -54,7 +56,7 @@ for i in range(10000):
 sim_env.TradeLog_visualiser(s.trade_log)
 
 s.trade_log.to_csv('tradelog.csv')
-t.aux_data.to_csv('aux_data.csv')
+# t.aux_data.to_csv('aux_data.csv')
 
 
 print(s.account_balance)

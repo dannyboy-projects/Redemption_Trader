@@ -2,9 +2,25 @@ import math
 import datetime, pytz
 import time
 import pandas as pd
+import math as m
+import joblib
 
+def load_DT_model(DT_model_filename):
+    return joblib.load(DT_model_filename)
 
+def format_model_input(data,dir):
+    df = pd.DataFrame(index = [0],columns = ['open_time_fmt','dir','percent2MA','percent_candle_size','parkinson_volatility'])
+    df.loc[0,'open_time_fmt'] = pd.to_datetime(data.name).hour*12 + pd.to_datetime(data.name).minute
+    df.loc[0,'dir'] = dir
 
+    df.loc[0,'percent_candle_size'] = (midmarket(data['close_bid'],data['close_ask']) - midmarket(data['open_bid'],data['open_ask'])) \
+        /midmarket(data['open_bid'],data['open_ask'])
+    df['parkinson_volatility'] = data['parkinson_volatility']
+
+    df.loc[0,'percent2MA'] = (df['open'] - df['open'].rolling(12).mean())
+
+  
+    return df.copy()
 
 def get_R(entry, target, stoploss):
     return (target - stoploss)/(entry - stoploss)
@@ -78,9 +94,6 @@ def valid_hours(t):
         return True
     else:
         return False
-
-
-
 
 
 def get_open_markets(utc):
