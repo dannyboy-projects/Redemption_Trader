@@ -47,3 +47,5 @@ These simple trading rules, which allow for mulitple positions to be open at onc
 
 
 
+
+

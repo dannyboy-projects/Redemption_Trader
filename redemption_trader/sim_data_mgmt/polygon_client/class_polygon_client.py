@@ -6,6 +6,8 @@ import time
 import math
 from helpers import *
 import os
+from APIKEY import *
+
 
 MAX_AGGS = 50000
 
@@ -21,7 +23,7 @@ def weekdays_between(start_date, end_date):
 
 def get_aggs_for_symbol_and_date(symbols,start,end,resolution, multiplier):
 
-    client = RESTClient(trace=True,api_key = "PR16BoGg0F9ZoGj9cvTkOSdkpolU97nA")  # Uses POLYGON_API_KEY environment variable
+    client = RESTClient(trace=True,api_key = API_KEY)  # Uses POLYGON_API_KEY environment variable
     aggs = []
     
     for s in symbols:

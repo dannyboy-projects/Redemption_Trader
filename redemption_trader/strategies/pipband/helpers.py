@@ -89,7 +89,7 @@ def end_of_week(utc):
 def valid_hours(t):
     t = pd.to_datetime(t).to_pydatetime()
 
-    valid_hours = [0,3,4,9,10,13,15,19,21]
+    valid_hours = [13,15,19,21]
 
     if t.hour in (valid_hours):
         return True
@@ -163,7 +163,14 @@ def get_open_markets(utc):
     return {'Tokyo':Tokyo, 'Sydney':Sydney, 'London':London, 'NYC':NewYorkCity}
 
 
+def timestop(t, timestop):
+    t = pd.to_datetime(t)
+    timestop = pd.to_datetime(timestop)
 
+    if t >= timestop:
+        return True
+    else: 
+        return False
 
     
 

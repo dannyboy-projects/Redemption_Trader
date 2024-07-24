@@ -133,7 +133,7 @@ class SimOrderMgmtSystem:
                                         PnL,\
                                         self.account_balance]
        
-        print('closed: ', trade_id,'acc balance: ',self.account_balance)
+        print('closed: ', trade_id,close_time,'acc balance: ',self.account_balance)
         return 0
        
     def _filled_Limit2open_pos(self,filled_Limit):

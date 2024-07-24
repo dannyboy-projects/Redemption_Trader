@@ -35,18 +35,18 @@ class Pipband_DataLabeller:
             dir = entry_signal(self.open_px,self.close_px,band)
             open_markets = get_open_markets(self.timestamp)
 
-            if ((new_candle(self.timestamp,data.name) and dir) and (open_markets['NYC'] or open_markets['London']) ):# dir is non-zero = True
+            if ((new_candle(self.timestamp,data.name) and dir) and valid_hours(self.timestamp)):# dir is non-zero = True
     
                 T_px, SL_px = gen_targets(dir,self.close_px,band)
-                # risk_GBP = self.parameters['account_risk_per_trade']*self.account_balance
+                risk_GBP = self.parameters['account_risk_per_trade']*self.account_balance
                 
-                # size = position_size(dir, self.close_px, SL_px,risk_GBP)
+                size = position_size(dir, self.close_px, SL_px,risk_GBP)
 
                 if dir ==1:
-                    self.dealref = self.deal("BUY",SL_px, T_px, 1,self.instrument)
+                    self.dealref = self.deal("BUY",SL_px, T_px, size,self.instrument)
                     # self.status = 'open_position'
                 elif dir == -1:
-                    self.dealref = self.deal("SELL",SL_px, T_px, 1,self.instrument)
+                    self.dealref = self.deal("SELL",SL_px, T_px, size,self.instrument)
                     # self.status = 'open_position'
                 self.timestops[self.dealref] = calc_timestop(data.name,6)
 
