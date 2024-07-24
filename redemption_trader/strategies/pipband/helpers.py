@@ -4,6 +4,7 @@ import time
 import pandas as pd
 import math as m
 import joblib
+from datetime import timedelta
 
 def load_DT_model(DT_model_filename):
     return joblib.load(DT_model_filename)
@@ -78,8 +79,8 @@ def end_of_week(utc):
     nyc_time = utc.astimezone(nyc)
 
     nyc_close_hrs = 17
-    print(nyc_time)
-    print(nyc_time.weekday())  
+    # print(nyc_time)
+    # print(nyc_time.weekday())  
     if nyc_time.weekday() == 4 and nyc_time.hour >= nyc_close_hrs:
         return True
     else:
@@ -94,6 +95,17 @@ def valid_hours(t):
         return True
     else:
         return False
+    
+
+
+def calc_timestop(open_time, t_stop):
+    t = pd.to_datetime(open_time)
+    DelTime = timedelta(hours = t_stop)
+    tz_off = (t + DelTime).strftime("%z")
+    t = (t + DelTime).strftime("%Y-%m-%d %H:%M:%S")
+    tz_off_format = tz_off[:3] + ':' + tz_off[3:]
+    t = t + tz_off_format
+    return t
 
 
 def get_open_markets(utc):

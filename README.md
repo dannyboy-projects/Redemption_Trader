@@ -26,11 +26,16 @@ This allows seamless migration from development (simulation) to live trading - a
 ### Pipband Strategy
 **Basic Premise**
 
-Essentially, around market opens it is believed that prices move more predctably around whole numbers e.g. 128.0000. This 'law of round numbers' or perhaps 'lore of round numbers' could be attributed to traders being more likely to fill orders around price levels that are easoer to type in, or perform mental aritmetic with. Coupled with daily increased volume at market opens around the world the pipband strategy aims to exploit these daily patterns - if they exist. 
+Essentially, around market opens it is believed that prices move more predctably around whole numbers e.g. 128.0000. This 'law of round numbers' or perhaps 'lore of round numbers' could be attributed to traders being more likely to fill orders around price levels that are easoer to type in, or perform mental aritmetic with. Coupled with daily increased volume at market opens around the world the pipband strategy aims to exploit these daily patterns - if they exist.
+
+To begin with, a simple cross-over of any 5 minute candle with an integer price level is taken as an entry signal. If price moves from below to close above an integer value, that is a long entry. If price moves from above to close below an integer value that is a short entry. 
+
+The next hihger(lower) integer value is taken as the target exit for Long (short) positions respectively. 
+
 
 **First Steps**
 
-Pullling 
+Pullling 2 years worth of USDJPY data
 
 
 

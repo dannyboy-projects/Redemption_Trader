@@ -17,14 +17,12 @@ class SimOrderMgmtSystem:
 
     def Login():
         print('login to oms')
-
-    # def _add2open_positions(self, px, deal_ref):
     
     def deal(self,dir,stop_loss,target_px,quantity,instrument):
-        print('the time is ', self.time) 
+         
+
         deal_ref = self._create_dealref()
-        
-        # print('curr',self.current_candle['open'])
+        print('open: ',deal_ref, 'open time: ', self.time)
 
         if dir == "BUY":
             dir = 1
@@ -42,14 +40,13 @@ class SimOrderMgmtSystem:
                                                                 'target': target_px,'stoploss':stop_loss,\
                                                                 'close_PX': 'N/A','close_time':'OPEN_TRADE'\
                                                                 ,'status':'FILLED_N_OPEN'}
-            # print(self.open_positions)
+                
         else:
             self.open_positions[self.strat_ID] = {deal_ref: \
                 {'instrument':instrument, 'open_time': self.current_candle.name\
              ,'dir': dir, 'open_PX':open_px,'size':quantity,'target': target_px,'stoploss':stop_loss,\
             'close_PX': 'N/A','close_time':'OPEN_TRADE','status':'FILLED_N_OPEN'}}
 
-        print(self.open_positions)
         return deal_ref
 
     def close_deal(self,trade_ID):
@@ -81,8 +78,6 @@ class SimOrderMgmtSystem:
     def limit_order(self,dir,entry,stop_loss,target_px,quantity,cancel_time,epic):
         pass
 
-    
-
     def close_limit_order(self,trade_ID):
         pass
 
@@ -110,20 +105,18 @@ class SimOrderMgmtSystem:
 
         
     def _closed_pos2tradeLog(self, strat_id, trade_id, closed_pos):
-
         # adjust for trading on candle close
-        open_time = pd.to_datetime(closed_pos['open_time'])
-        DelTime = timedelta(minutes=5)
-        tz_off = (open_time - DelTime).strftime("%z")
-        open_time= (open_time - DelTime).strftime("%Y-%m-%d %H:%M:%S")
-        tz_off_format = tz_off[:3] + ':' + tz_off[3:]
-        open_time = open_time + tz_off_format
+        open_time = closed_pos['open_time']
+        # open_time = pd.to_datetime(closed_pos['open_time'])
+        # DelTime = timedelta(minutes=5)
+        # tz_off = (open_time - DelTime).strftime("%z")
+        # open_time= (open_time - DelTime).strftime("%Y-%m-%d %H:%M:%S")
+        # tz_off_format = tz_off[:3] + ':' + tz_off[3:]
+        # open_time = open_time + tz_off_format
 
         close_time = closed_pos['close_time']
 
-        print(closed_pos)
-
-         # update strat object local parametes
+        # update strat object local parametes
 
         PnL = closed_pos['dir']*closed_pos['size']*(closed_pos['close_PX'] - closed_pos['open_PX'])
         self.parameters['session_PnL'] += PnL
@@ -140,8 +133,7 @@ class SimOrderMgmtSystem:
                                         PnL,\
                                         self.account_balance]
        
-        print(self.trade_log)
-        print(self.account_balance)
+        print('closed: ', trade_id,'acc balance: ',self.account_balance)
         return 0
        
     def _filled_Limit2open_pos(self,filled_Limit):
@@ -151,28 +143,29 @@ class SimOrderMgmtSystem:
        
         closed_pos = []
         if self.strat_ID in self.open_positions:
+
             for tradeID in self.open_positions[self.strat_ID]:
-                
-                # print('update_positions',float(self.open_positions[self.strat_ID][tradeID]['target']), self.current_candle['high_bid'])
-                #     print(trade)
-                # entry = self.open_positions[strat][tradeID]
+
                 if int(self.open_positions[self.strat_ID][tradeID]['dir']) == 1:
                     if float(self.current_candle["high_bid"]) >= float(self.open_positions[self.strat_ID][tradeID]['target']):
                         self.open_positions[self.strat_ID][tradeID]['status'] = "CLOSED"
                         self.open_positions[self.strat_ID][tradeID]['close_PX'] = self.open_positions[self.strat_ID][tradeID]['target']
                         self.open_positions[self.strat_ID][tradeID]['close_time'] = self.current_candle.name
                         closed_pos.append(tradeID)
+
                     elif float(self.current_candle["low_bid"]) <= float(self.open_positions[self.strat_ID][tradeID]['stoploss']):
                         self.open_positions[self.strat_ID][tradeID]['status'] = "CLOSED"
                         self.open_positions[self.strat_ID][tradeID]['close_PX'] = self.open_positions[self.strat_ID][tradeID]['stoploss']
                         self.open_positions[self.strat_ID][tradeID]['close_time'] = self.current_candle.name
                         closed_pos.append(tradeID)
+
                 elif int(self.open_positions[self.strat_ID][tradeID]['dir']) == -1:
                     if float(self.current_candle["low_ask"]) <= float(self.open_positions[self.strat_ID][tradeID]['target']):
                         self.open_positions[self.strat_ID][tradeID]['status'] = "CLOSED"
                         self.open_positions[self.strat_ID][tradeID]['close_PX'] = self.open_positions[self.strat_ID][tradeID]['target']
                         self.open_positions[self.strat_ID][tradeID]['close_time'] = self.current_candle.name
                         closed_pos.append(tradeID)
+
                     elif float(self.current_candle["high_ask"]) >= float(self.open_positions[self.strat_ID][tradeID]['stoploss']):
                         self.open_positions[self.strat_ID][tradeID]['status'] = "CLOSED"
                         self.open_positions[self.strat_ID][tradeID]['close_PX'] = self.open_positions[self.strat_ID][tradeID]['stoploss']
