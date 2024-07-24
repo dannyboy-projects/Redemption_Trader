@@ -42,7 +42,7 @@ E.g.
 These simple trading rules, which allow for mulitple positions to be open at once, are designed to capture all possible trades over the dataset (USDJPY<sup>(IS)</sup> Apr 2022 - May 2024). Essentially, it worth analysing whether any statistal edge appears or not, before refining trading rules or modelling price movements. Is there any evidence that price movement in the FX market aren't random around market open and round numbers?
 
 
-
+![no_trades_per_hour1](./Strategy_Exploration/pipband_exploration/figures/no_trades_per_hour.png)
 
 
 
