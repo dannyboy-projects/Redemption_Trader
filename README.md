@@ -24,9 +24,9 @@ Once the stragey is fully developped, the strat object can be instantiated using
 This allows seamless migration from development (simulation) to live trading - assuming the parent classes have been built correctly and with mirrored method names and attributes. 
 
 ### Pipband Strategy
-**Basic Premise**
+**Basic Thesis**
 
-Essentially, around market opens it is believed that prices move more predctably around whole numbers e.g. 128.0000. This 'law of round numbers' or perhaps 'lore of round numbers' could be attributed to traders being more likely to fill orders around price levels that are easoer to type in, or perform mental aritmetic with. Coupled with daily increased volume at market opens around the world the pipband strategy aims to exploit these daily patterns - if they exist.
+Around market opens it is believed that prices move more predctably close to whole numbers e.g. 128.0000. This 'law of round numbers' or perhaps 'lore of round numbers' could be attributed to traders being more likely to fill orders around price levels that are easier to type-in, or perform mental aritmetic with. Perhaps structured products with FX options bundled together cold also trigger at convient price levels. The pipband strategy aims to exploit these daily patterns - if they exist.
 
 To begin with, a simple cross-over of any 5 minute candle with an integer price level is taken as an entry signal. If price moves from below to close above an integer value, that is a long entry. If price moves from above to close below an integer value that is a short entry. 
 
