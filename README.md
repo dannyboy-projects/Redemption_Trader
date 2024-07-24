@@ -28,14 +28,20 @@ This allows seamless migration from development (simulation) to live trading - a
 
 Around market opens it is believed that prices move more predctably close to whole numbers e.g. 128.0000. This 'law of round numbers' or perhaps 'lore of round numbers' could be attributed to traders being more likely to fill orders around price levels that are easier to type-in, or perform mental aritmetic with. Perhaps structured products with FX options bundled together cold also trigger at convient price levels. The pipband strategy aims to exploit these daily patterns - if they exist.
 
-To begin with, a simple cross-over of any 5 minute candle with an integer price level is taken as an entry signal. If price moves from below to close above an integer value, that is a long entry. If price moves from above to close below an integer value that is a short entry. 
 
-The next hihger(lower) integer value is taken as the target exit for Long (short) positions respectively. 
+**Entry Signals**
+
+A simple cross-over of any 5 minute candle with an integer price level is taken as an entry signal. If price moves from below to close above an integer value, that is a long entry. If price moves from above to close below an integer value that is a short entry. 
+
+The next higher(lower) integer value is taken as the target exit for Long (short) positions respectively.
+
+E.g.
 
 
-**First Steps**
 
-Pullling 2 years worth of USDJPY data
+These simple trading rules, which allow for mulitple positions to be open at once, are designed to capture all possible trades over the dataset (USDJPY<sup>(IS)</sup> Apr 2022 - May 2024). Essentially, it worth analysing whether any statistal edge appears or not, before refining trading rules or modelling price movements. Is there any evidence that price movement in the FX market aren't random around market open and round numbers?
+
+
 
 
 
