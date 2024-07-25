@@ -5,7 +5,7 @@ Algo trading simulation and trading code base
 ### Overview
 Brief overvew of the main components built here to develop aglorithmic trading strategies.
 
-**Infrastructure**
+### Infrastructure
 - strategy objects :white_check_mark:
 - simulation enviroment :white_check_mark:
 - data pull and pre-processing :white_check_mark:
