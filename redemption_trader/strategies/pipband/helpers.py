@@ -89,7 +89,7 @@ def end_of_week(utc):
 def valid_hours(t):
     t = pd.to_datetime(t).to_pydatetime()
 
-    valid_hours = [0]
+    valid_hours = [13,15,19,21]
 
     if t.hour in (valid_hours):
         return True

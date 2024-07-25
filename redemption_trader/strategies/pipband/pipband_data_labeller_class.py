@@ -48,7 +48,7 @@ class Pipband_DataLabeller:
                 elif dir == -1:
                     self.dealref = self.deal("SELL",SL_px, T_px, size,self.instrument)
                     # self.status = 'open_position'
-                self.timestops[self.dealref] = calc_timestop(data.name,6)
+                self.timestops[self.dealref] = calc_timestop(data.name,40)
 
                 # generate aux data for ML model
                 candle_size = midmarket(data['close_bid'],data['close_ask']) - midmarket(data['open_bid'],data['open_ask'])

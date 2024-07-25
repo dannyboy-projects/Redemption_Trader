@@ -45,7 +45,7 @@ s = strat(1)
 t = data_labeller(2)
 
 # populate list
-strategies = [s]
+strategies = [t]
 
 for strat in strategies:
     strat.add_listener(strat.listen_and_operate)
@@ -76,14 +76,14 @@ GlobalStreamObj.load_data_subscription('C:USDJPY',usdjpy)
 #----------------------------------------------------------------------
 # Main loop
 #----------------------------------------------------------------------
-for i in range(1000):
+for i in range(len(usdjpy)):
     GlobalStreamObj.time_step(usdjpy.index.values[i])
 
 
 sim_env.TradeLog_visualiser(s.trade_log)
-strategies[0].trade_log.to_csv('tradelog_IS_Tokyo_only.csv')
+strategies[0].trade_log.to_csv('tradelog_IS_all_trades_validhours_ts40.csv')
 
-# t.aux_data.to_csv('aux_data.csv')
+t.aux_data.to_csv('aux_data.csv')
 print(strategies[0].trade_log)
 print(strategies[0].account_balance)
 
