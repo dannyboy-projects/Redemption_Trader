@@ -8,8 +8,7 @@ import pandas as pd
 # Inputs
 #----------------------------------------------------------------------
 
-visualise_tradelog = False
-
+visualise_tradelog = True
 
 #----------------------------------------------------------------------
 
@@ -77,7 +76,7 @@ GlobalStreamObj.load_data_subscription('C:USDJPY',usdjpy)
 #----------------------------------------------------------------------
 # Main loop
 #----------------------------------------------------------------------
-for i in range(len(usdjpy)):
+for i in range(1000):
     GlobalStreamObj.time_step(usdjpy.index.values[i])
 
 
@@ -93,25 +92,5 @@ if visualise_tradelog:
         print('dir: ', strategies[0].trade_log.loc[t,'dir'], 'PnL: ', strategies[0].trade_log.loc[t,'PnL'], 'dealref: ', t)
         open_time = strategies[0].trade_log.loc[t]['open_time']
         close_time = strategies[0].trade_log.loc[t]['close_time']
-        sim_env.create_interactive_visualiser(usdjpy_visualiser, start_date=open_time, end_date=close_time)
-        input('')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        sim_env.create_interactive_visualiser(usdjpy_visualiser,strategies[0].trade_log.loc[t], start_date=open_time, end_date=close_time, fancy = True)
+        input('press enter for next trade')

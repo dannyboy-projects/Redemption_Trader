@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 # import datetime as dt
 
 
-def create_interactive_visualiser(df, start_date = None, end_date = None):
+def create_interactive_visualiser(df, tradelog,start_date = None, end_date = None, fancy = None):
     if pd.api.types.is_datetime64_any_dtype(df.index):
         pass
     else:
@@ -23,6 +23,46 @@ def create_interactive_visualiser(df, start_date = None, end_date = None):
                                           low  = df['low'],\
                                           close= df['close'])])
     # fig.update_layout(xaxis_rangeslider_visible=False)
+
+    dir = tradelog['dir']
+    if dir ==1 :
+        target = 1
+        open_marker = 'arrow-bar-up'
+    else:
+        target = -1
+        open_marker = 'arrow-bar-down'
+
+
+    if tradelog['PnL'] > 0:
+        close_color = 'green'
+    else:
+        close_color = 'red' 
+
+    
+
+
+    if fancy:
+        fig.add_hline(y = round(tradelog['open_price']), annotation_text='entry level')
+        fig.add_hline(y = round(tradelog['open_price'])+target,annotation_text='target level')
+        fig.add_hline(y = round(tradelog['open_price'])-target,annotation_text='stop level')
+        fig.add_trace(go.Scatter(
+                x=[start_date],
+                y=[tradelog['open_price']],
+                mode='markers',
+                marker_symbol = open_marker,
+                marker=dict(size=14, color='blue'),
+                name='Open'))
+
+        fig.add_trace(go.Scatter(
+                x=[end_date],
+                y=[tradelog['close_price']],
+                mode='markers',
+                marker_symbol = 'x',
+                marker=dict(size=14, color=close_color),
+                name='Close'))
+
+
+
     fig.show()
 
 
