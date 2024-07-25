@@ -79,7 +79,19 @@ $\text{EV(h)} = \frac{\text{no. trades in hour h}}{\text{total no. of trades}} \
 
 
 
-Thus, plotting all three value
+Thus, plotting all three values: 
+
+
+![no_trades_per_hour1](./strategy_exploration/pipband_exploration/figures/wr_EV_IS.png)
+
+
+The most succesful entry signal exist as far to the top right corner as possible, and 4 hours stand out as the best. Namely, the hour (UTC) of 13, 15, 19, 21
+
+These hours serve as more evidence of the signficance of US open and close, and the repeating patterns that statsitaclly seem to appear. 
+
+Finally, considering the average time in trade of winners and losers might help us implement a time stop as well as favour winning trades if possible
+
+
 
 
 
