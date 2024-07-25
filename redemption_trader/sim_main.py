@@ -58,7 +58,7 @@ for strat in strategies:
 #----------------------------------------------------------------------
 
 
-usdjpy = pd.read_csv('./redemption_trader/processed_data/C:USDJPY_clean_OS.csv',index_col = 0)
+usdjpy = pd.read_csv('./redemption_trader/processed_data/C:USDJPY_clean.csv',index_col = 0)
 
 usdjpy_visualiser = usdjpy.copy()
 
@@ -82,7 +82,7 @@ for i in range(len(usdjpy)):
 
 
 sim_env.TradeLog_visualiser(s.trade_log)
-strategies[0].trade_log.to_csv('tradelog_OS_oneopen_valid_hours_timestop40hr.csv')
+strategies[0].trade_log.to_csv('tradelog_IS_Tokyo_only.csv')
 
 # t.aux_data.to_csv('aux_data.csv')
 print(strategies[0].trade_log)
