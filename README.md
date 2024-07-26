@@ -250,6 +250,6 @@ Decision Trees, regression, What variables to measure at trade entry that could 
 
 ## Simulations
 
-`sim_main.py` is where the strategy objects are created and 
+`sim_main.py` 
 
 
