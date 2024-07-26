@@ -175,7 +175,7 @@ $\text{Sharpe} = \frac{\text{Annualised return \%} - RFR\%}{\text{Annulised Mont
 
 
 
-### Muliple Trades Open
+### Multiple Trades Open
 
 ![equity_curve_2](./strategy_exploration/pipband_exploration/figures/multiple_trades_equity_curve.png)
 
