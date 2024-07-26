@@ -170,7 +170,7 @@ Sharpe <sup>(IS + OS)</sup> = 1.95 <br />
 RFR = 4%<br />
 $\text{Annulised Monthly} \sigma_p = \sqrt{12} \sigma_{p,monthly}$<br />
 
-$\text{Sharpe} = \frac{\text{Annualised return \%} - RFR\%}{\text{Annulised Monthly}\; \sigma_p}$<br />
+$\text{Sharpe} = \frac{\text{Annualised return \%} - RFR\%}{\text{Annulised Monthly} \sigma_p}$<br />
 
 
 
@@ -230,7 +230,7 @@ $\text{Sharpe} = \frac{\text{Annualised return \%} - RFR\%}{\text{Annulised Mont
 
 - **Sharpe ratio not affect by % account risk per trade, but max drawdown is. One-trade approach has moderately lower drawdowns than multi-trade approach**
 
--**Multitrade approach can have up to 10 trades open at once, may not be margin efficient in context of wider portfolio**
+- **Multitrade approach can have up to 10 trades open at once, may not be margin efficient in context of wider portfolio**
 
 ## Future Work
 
