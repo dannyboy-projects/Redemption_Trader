@@ -214,9 +214,10 @@ Sharpe <sup>(OS)</sup> = 1.46
 |Monthly|-18.67|8.43|15.19|
 ***
 
-Sharpe <sup>(IS + OS)</sup> = 1.85 
+Sharpe <sup>(IS + OS)</sup> = 1.85  
 
-RFR = 4%
+RFR = 4%  
+
 
 $\text{Annulised Monthly} \sigma_p = \sqrt{12} \sigma_{p,monthly}$
 
