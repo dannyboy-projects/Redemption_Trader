@@ -165,12 +165,12 @@ Sharpe <sup>(OS)</sup> = 1.75
 
 
 
-Sharpe <sup>(IS + OS)</sup> = 1.95 
+Sharpe <sup>(IS + OS)</sup> = 1.95 <br />
 
-RFR = 4%
-$\text{Annulised Monthly} \sigma_p = \sqrt{12} \sigma_{p,monthly}$
+RFR = 4%<br />
+$\text{Annulised Monthly} \sigma_p = \sqrt{12} \sigma_{p,monthly}$<br />
 
-$\text{Sharpe} = \frac{\text{Annualised return \%} - RFR\%}{\text{Annulised Monthly}\; \sigma_p}$
+$\text{Sharpe} = \frac{\text{Annualised return \%} - RFR\%}{\text{Annulised Monthly}\; \sigma_p}$<br />
 
 
 
@@ -214,14 +214,14 @@ Sharpe <sup>(OS)</sup> = 1.46
 |Monthly|-18.67|8.43|15.19|
 ***
 
-Sharpe <sup>(IS + OS)</sup> = 1.85  
+Sharpe <sup>(IS + OS)</sup> = 1.85<br />
 
-RFR = 4%  
+RFR = 4%<br />
 
 
-$\text{Annulised Monthly} \sigma_p = \sqrt{12} \sigma_{p,monthly}$
+$\text{Annulised Monthly} \sigma_p = \sqrt{12} \sigma_{p,monthly}$<br />
 
-$\text{Sharpe} = \frac{\text{Annualised return \%} - RFR\%}{\text{Annulised Monthly}\; \sigma_p}$
+$\text{Sharpe} = \frac{\text{Annualised return \%} - RFR\%}{\text{Annulised Monthly}\; \sigma_p}$<br />
 
 ## Conclusions 
 
