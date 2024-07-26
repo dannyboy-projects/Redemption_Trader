@@ -26,7 +26,7 @@ This allows seamless migration from development (simulation) to live trading - a
 
 
 ### Pipband Strategy
-**Basic Thesis**
+**Basic Trade Idea**
 
 Around market opens it is believed that prices move more predictably close to whole numbers e.g. 128.0000 adn especially around market opens and closes when trading activity picks up. This 'law of round numbers' or perhaps 'lore of round numbers' could be attributed to traders being more likely to fill orders around price levels that are easier to type-in, or perform mental aritmetic with. Perhaps structured products with FX options bundled together cold also trigger at convenient price levels. The pipband strategy aims to exploit these daily patterns - if they exist. 
 
@@ -42,7 +42,7 @@ The next higher(lower) integer value is taken as the target exit for Long (short
 E.g.
 
 
-![long_entry](./strategy_exploration/pipband_exploration/figures/long_entry.png)
+![long_entry](./strategy_exploration/pipband_exploration/figures/newplot.png)
 
 
 
@@ -77,6 +77,7 @@ Where W(h), L(h) are the number of winning/losing trades in hour h
 
 $\text{EV(h)} = \frac{\text{no. trades in hour h}}{\text{total no. of trades}} \;\;\; \text{PnL(h)}$ 
 
+A spread of 0.5 bps was used, roughly 80-100 pips throughout the simulation.
 
 
 Thus, plotting all three values: 
@@ -89,18 +90,170 @@ The most succesful entry signal exist as far to the top right corner as possible
 
 These hours serve as more evidence of the signficance of US open and close, and the repeating patterns that statsitaclly seem to appear. 
 
-Finally, considering the average time in trade of winners and losers might help us implement a time stop as well as favour winning trades if possible
+Furthermore, considering the average time in trade of winners and losers might help us implement a time stop as well as favour winning trades if possible
+
+
+|Hour| win rate (%) |Median Time in Trade Wins(hr) |Median Time in Trade Losses (hr) |
+|----|-------------|:-------------------:|---------------------|
+|13| 59.3 | 22.3 | 23|
+|15| 57.5 | 21.4 | 22.3 |
+|19| 61.1 | 23.6 | 28.9|
+|21| 58.6 |39.5 | 32.9|
+
+
+So clearly a timestop can't disguish between winning and losing trades, but a histogram of all trades shows the majority of trades taking less than 40 hours to complete.
 
 
 
 
+**Results**
+
+Compiling the trading rules derived on the In-Sample data:
+
+(1) Only trade entry signals generated in the hours of [13,15,19,21]
+
+(2) 40 hr timestop
+
+Rules to be tested:
+(3) % account risk per trade (5%) - instead of flat position size
+
+(4) One trade open versus many trades open at once
+
+Now using Out-of-Sample data (2023-05-31 to 2024-04-27), let's test the one-open vs multiple trades approach
+
+
+**One-Trade Open**
+
+![equity_curve_1](./strategy_exploration/pipband_exploration/figures/one_trade_open_equity_curve.png)
+
+
+***IS results***
+| |max. Draw Down (%) | Cumulative Growth Rate | Volatility of Returns (%)|
+|---|---|---|---|
+|Daily|-7.98| 0.31 |3.80|
+|Weekly|-11.20|2.18|6.08|
+|Monthly|-10.30|9.45|13.37|
+
+
+Sharpe <sup>(IS)</sup> = 2.37
 
 
 
 
+***OS Results***
+| |max. Draw Down (%) | Cumulative Growth Rate | Volatility of Returns (%)|
+|---|---|---|---|
+|Daily|-5.05| 0.14 |3.57|
+|Weekly|-8.97|0.99|4.44|
+|Monthly|-10.22|4.29|7.86|
+
+***
+___
+
+
+Sharpe <sup>(OS)</sup> = 1.75 
+
+
+
+***Joint IS-OS***
+| |max. Draw Down (%) | Cumulative Growth Rate | Volatility of Returns (%)|
+|---|---|---|---|
+|Daily|-7.98| 0.22 |3.71|
+|Weekly|-11.20|1.55|5.43|
+|Monthly|-10.30|6.70|11.33|
+
+***
+___
+
+Sharpe <sup>(IS + OS)</sup> = 1.95 
+
+RFR = 4%
+$\text{Annulised Monthly} \sigma_p = \sqrt{12} \sigma_{p,monthly}$
+
+$\text{Sharpe} = \frac{\text{Annualised return \%} - RFR\%}{\text{Annulised Monthly}\; \sigma_p}$
 
 
 
 
+**Muliple Trades Open**
+
+![equity_curve_2](./strategy_exploration/pipband_exploration/figures/multiple_trades_equity_curve.png)
+
+
+
+***IS results***
+| |max. Draw Down (%) | Cumulative Growth Rate | Volatility of Returns (%)|
+|---|---|---|---|
+|Daily|-11.46| 0.39 |4.20|
+|Weekly|-11.00|2.69|7.41|
+|Monthly|-18.68|11.69|17.12|
+
+
+Sharpe <sup>(IS)</sup> = 2.30
+
+
+
+
+***OS Results***
+| |max. Draw Down (%) | Cumulative Growth Rate | Volatility of Returns (%)|
+|---|---|---|---|
+|Daily|-10.12| 0.18 |3.24|
+|Weekly|-11.73|1.27|6.14|
+|Monthly|-11.59|5.49|12.26|
+
+***
+___
+
+
+Sharpe <sup>(OS)</sup> = 1.46 
+
+
+
+***Joint IS-OS***
+| |max. Draw Down (%) | Cumulative Growth Rate | Volatility of Returns (%)|
+|---|---|---|---|
+|Daily|-11.46| 0.28 |3.85|
+|Weekly|-11.73|1.95|6.88|
+|Monthly|-18.67|8.43|15.19|
+
+***
+___
+
+Sharpe <sup>(IS + OS)</sup> = 1.85 
+
+RFR = 4%
+
+$\text{Annulised Monthly} \sigma_p = \sqrt{12} \sigma_{p,monthly}$
+
+$\text{Sharpe} = \frac{\text{Annualised return \%} - RFR\%}{\text{Annulised Monthly}\; \sigma_p}$
+
+***Conclusions***
+
+
+- **The one-trade open approach has a better Sharpe ratio of 1.75 in OS testing compared to 1.46 in the multi-trade approach**
+
+- **Sharpe ratio not affect by % account risk per trade, but max drawdown is. One-trade approach has moderately lower drawdowns than multi-trade approach**
+
+-**Multitrade approach can have up to 10 trades open at once, may not be margin efficient in context of wider portfolio**
+
+### Future Work
+
+- Investigate other currency pairs, ideally unrelated to US and JPY markets. i.e. EURGBP, CHFGBP, AUDNZD
+
+- Evaluate basket of currency trading strategies (Draw Down, Sharpe) Hopefully Sharpe can be imporved further 
+
+- Can ML help predict succesful trades given backtesting data?
+Decision Trees, regression, What variables to measure at trade entry that could predict win/loss?
+
+- Build Live Trading enviroment (margin calculations, hosting, Broker APIs)
+
+
+### How to Run
+
+### Data Pull - Polygon.api
+
+### Simulations
+
+`sim_main.py` is where the strategy objects are created and 
 
 

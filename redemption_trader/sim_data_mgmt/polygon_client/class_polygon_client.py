@@ -109,7 +109,7 @@ if __name__== '__main__':
 
     poly_params = {'source':'polygon','resolution':'minute','multiplier':5}
 
-    pause = 12 #seconds since 5 api calls per min
+    pause = 12 # seconds since 5 api calls per min
     Monday = "2024-04-29"
     date_fmt = "%Y-%m-%d"
     Sunday_open = Monday_2_fxSunday_open(Monday)
