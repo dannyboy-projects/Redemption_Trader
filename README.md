@@ -2,10 +2,10 @@
 Algo trading simulation and trading code base
 
 ---
-### Overview
+# Overview
 Brief overvew of the main components built here to develop algorithmic trading strategies.
 
-### Infrastructure
+# Infrastructure
 - **Strategy objects** :white_check_mark:
 - **simulation enviroment** :white_check_mark:
 - **Data pull and pre-processing** :white_check_mark:
@@ -25,15 +25,15 @@ This allows seamless migration from development (simulation) to live trading - a
 
 
 
-### Pipband Strategy
-**Basic Trade Idea**
+# Pipband Strategy
+### Basic Trade Idea
 
 Around market opens it is believed that prices move more predictably close to whole numbers e.g. 128.0000 adn especially around market opens and closes when trading activity picks up. This 'law of round numbers' or perhaps 'lore of round numbers' could be attributed to traders being more likely to fill orders around price levels that are easier to type-in, or perform mental aritmetic with. Perhaps structured products with FX options bundled together cold also trigger at convenient price levels. The pipband strategy aims to exploit these daily patterns - if they exist. 
 
 USDJPY was taken as a starting point. The BoJ is the largest holder of US Treasuries and the associated FX hedging is theorised to produce repeating patterns in USDJPY price movements. (https://www.statista.com/chart/31941/largest-foreign-holders-of-us-treasury-bonds/)
 
 
-**Entry Signals**
+## Entry Signals
 
 A simple cross-over of any 5 minute candle with an integer price level is taken as an entry signal. If price moves from below to close above an integer value, that is a long entry. If price moves from above to close below an integer value that is a short entry. 
 
@@ -53,7 +53,7 @@ A constant position size of 1 was used for all trades, in order to calculate PnL
 
 Essentially, it worth analysing whether any statistal edge appears or not, before refining trading rules or modelling price movements. Is there any evidence that price movement in the FX market aren't random around market open/close and round numbers?
 
-**All Entry Signals (IS)**
+## All Entry Signals (IS)
 
 Perhaps as evidence in the origianl thesis, spikes in the frequency in entry signals are seen near or around market opens as illustrated in following graph.
 
@@ -106,7 +106,7 @@ So clearly a timestop can't disguish between winning and losing trades, but a hi
 
 
 
-**Results**
+## Results
 
 Compiling the trading rules derived on the In-Sample data:
 
@@ -122,7 +122,7 @@ Rules to be tested:
 Now using Out-of-Sample data (2023-05-31 to 2024-04-27), let's test the one-open vs multiple trades approach
 
 
-**One-Trade Open**
+### One-Trade Open
 
 ![equity_curve_1](./strategy_exploration/pipband_exploration/figures/one_trade_open_equity_curve.png)
 
@@ -175,7 +175,7 @@ $\text{Sharpe} = \frac{\text{Annualised return \%} - RFR\%}{\text{Annulised Mont
 
 
 
-**Muliple Trades Open**
+### Muliple Trades Open
 
 ![equity_curve_2](./strategy_exploration/pipband_exploration/figures/multiple_trades_equity_curve.png)
 
@@ -227,7 +227,7 @@ $\text{Annulised Monthly} \sigma_p = \sqrt{12} \sigma_{p,monthly}$
 
 $\text{Sharpe} = \frac{\text{Annualised return \%} - RFR\%}{\text{Annulised Monthly}\; \sigma_p}$
 
-***Conclusions***
+## Conclusions 
 
 
 - **The one-trade open approach has a better Sharpe ratio of 1.75 in OS testing compared to 1.46 in the multi-trade approach**
@@ -236,7 +236,7 @@ $\text{Sharpe} = \frac{\text{Annualised return \%} - RFR\%}{\text{Annulised Mont
 
 -**Multitrade approach can have up to 10 trades open at once, may not be margin efficient in context of wider portfolio**
 
-### Future Work
+## Future Work
 
 - Investigate other currency pairs, ideally unrelated to US and JPY markets. i.e. EURGBP, CHFGBP, AUDNZD
 
@@ -248,11 +248,11 @@ Decision Trees, regression, What variables to measure at trade entry that could 
 - Build Live Trading enviroment (margin calculations, hosting, Broker APIs)
 
 
-### How to Run
+# How to Run
 
-### Data Pull - Polygon.api
+## Data Pull - Polygon.api
 
-### Simulations
+## Simulations
 
 `sim_main.py` is where the strategy objects are created and 
 
