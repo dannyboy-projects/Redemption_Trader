@@ -133,6 +133,7 @@ Now using Out-of-Sample data (2023-05-31 to 2024-04-27), let's test the one-open
 |Daily|-7.98| 0.31 |3.80|
 |Weekly|-11.20|2.18|6.08|
 |Monthly|-10.30|9.45|13.37|
+***
 
 
 Sharpe <sup>(IS)</sup> = 2.37
@@ -146,9 +147,8 @@ Sharpe <sup>(IS)</sup> = 2.37
 |Daily|-5.05| 0.14 |3.57|
 |Weekly|-8.97|0.99|4.44|
 |Monthly|-10.22|4.29|7.86|
-
 ***
-___
+
 
 
 Sharpe <sup>(OS)</sup> = 1.75 
@@ -161,9 +161,9 @@ Sharpe <sup>(OS)</sup> = 1.75
 |Daily|-7.98| 0.22 |3.71|
 |Weekly|-11.20|1.55|5.43|
 |Monthly|-10.30|6.70|11.33|
-
 ***
-___
+
+
 
 Sharpe <sup>(IS + OS)</sup> = 1.95 
 
@@ -200,10 +200,7 @@ Sharpe <sup>(IS)</sup> = 2.30
 |Daily|-10.12| 0.18 |3.24|
 |Weekly|-11.73|1.27|6.14|
 |Monthly|-11.59|5.49|12.26|
-
 ***
-___
-
 
 Sharpe <sup>(OS)</sup> = 1.46 
 
@@ -215,9 +212,7 @@ Sharpe <sup>(OS)</sup> = 1.46
 |Daily|-11.46| 0.28 |3.85|
 |Weekly|-11.73|1.95|6.88|
 |Monthly|-18.67|8.43|15.19|
-
 ***
-___
 
 Sharpe <sup>(IS + OS)</sup> = 1.85 
 
