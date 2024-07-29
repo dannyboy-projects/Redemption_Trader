@@ -5,7 +5,7 @@ class Pipband:
         self.strat_ID    = id
         self.instrument = ''
         self.timestamp   =  0
-        self.parameters = {'account_risk_per_trade':0.05, 'min_RewardRisk': 1.00, 'session_PnL':0.00}
+        self.parameters = {'account_risk_per_trade':0.01, 'min_RewardRisk': 1.00, 'session_PnL':0.00}
         self.status     = 'standby'
         self.open_px    = 0
         self.close_px   = 0
@@ -19,7 +19,7 @@ class Pipband:
 
     def listen_and_operate(self,data):
         
-        band = 1
+        band = 0.5
         
         if self.status == 'standby':
            print('startup')
@@ -57,7 +57,7 @@ class Pipband:
                     self.dealref = self.deal("SELL",SL_px, T_px, size,self.instrument)
                     self.status = 'open_position'
                 # 6 hour timestop comes from prelim.ipynb
-                self.timestops[self.dealref] = calc_timestop(data.name,40)
+                self.timestops[self.dealref] = calc_timestop(data.name,7)
                 
             self.timestamp = data.name
             self.open_px   = midmarket(data['open_bid'],data['open_ask'])

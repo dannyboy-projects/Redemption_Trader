@@ -45,7 +45,7 @@ s = strat(1)
 t = data_labeller(2)
 
 # populate list
-strategies = [t]
+strategies = [s]
 
 for strat in strategies:
     strat.add_listener(strat.listen_and_operate)
@@ -81,7 +81,7 @@ for i in range(len(usdjpy)):
 
 
 sim_env.TradeLog_visualiser(s.trade_log)
-strategies[0].trade_log.to_csv('tradelog_IS_all_trades_validhours_ts40.csv')
+strategies[0].trade_log.to_csv('tradelog_0.5_valid_ts7.csv')
 
 t.aux_data.to_csv('aux_data.csv')
 print(strategies[0].trade_log)

@@ -34,13 +34,14 @@ class Pipband_DataLabeller:
          
             dir = entry_signal(self.open_px,self.close_px,band)
             open_markets = get_open_markets(self.timestamp)
-
-            if ((new_candle(self.timestamp,data.name) and dir) and valid_hours(self.timestamp)):# dir is non-zero = True
+# and valid_hours(self.timestamp)
+            if ((new_candle(self.timestamp,data.name) and dir) ):# dir is non-zero = True
     
                 T_px, SL_px = gen_targets(dir,self.close_px,band)
                 risk_GBP = self.parameters['account_risk_per_trade']*self.account_balance
                 
                 size = position_size(dir, self.close_px, SL_px,risk_GBP)
+                size =1
 
                 if dir ==1:
                     self.dealref = self.deal("BUY",SL_px, T_px, size,self.instrument)
@@ -48,7 +49,7 @@ class Pipband_DataLabeller:
                 elif dir == -1:
                     self.dealref = self.deal("SELL",SL_px, T_px, size,self.instrument)
                     # self.status = 'open_position'
-                self.timestops[self.dealref] = calc_timestop(data.name,40)
+                # self.timestops[self.dealref] = calc_timestop(data.name,40)
 
                 # generate aux data for ML model
                 candle_size = midmarket(data['close_bid'],data['close_ask']) - midmarket(data['open_bid'],data['open_ask'])

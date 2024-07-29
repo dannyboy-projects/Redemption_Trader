@@ -56,8 +56,8 @@ def midmarket(bid,ask):
 #   Strategy Specific
 #------------------------------------------------
 def nearest_00levels(px,band):
-    HiLevel = band*( math.floor(px/band)+math.ceil((px - math.floor(px))/band) )
-    LoLevel = band *( math.floor(px/band)+math.floor((px - math.floor(px))/band))
+    HiLevel = band*( math.floor(px/band)+ 1 )
+    LoLevel = band *( math.floor(px/band))
     return LoLevel, HiLevel
 
 
@@ -89,7 +89,7 @@ def end_of_week(utc):
 def valid_hours(t):
     t = pd.to_datetime(t).to_pydatetime()
 
-    valid_hours = [13,15,19,21]
+    valid_hours = [8,15]
 
     if t.hour in (valid_hours):
         return True
